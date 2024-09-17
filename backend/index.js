@@ -1,11 +1,9 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
-const fs = require('fs');
-const path = require('path');
+const port = process.env.PORT || 5000;  // Use the Heroku-assigned port or fallback to 5000 for local development
 
-// Use the PORT environment variable provided by Heroku, or default to 5000 locally
-const port = process.env.PORT || 5000;
-
+app.use(cors());  // Use CORS if needed
 // Serve fish data
 app.get('/api/fish', (req, res) => {
   const fishDataPath = path.join(__dirname, 'data', 'fish_data.json');
