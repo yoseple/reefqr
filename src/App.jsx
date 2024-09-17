@@ -4,14 +4,15 @@ import Nav from './Components/Nav';
 import Home from './Components/Home';
 import FishCatalog from './Components/FishCatalog';
 import FishDetails from './Components/FishDetails';
-import About from './Components/About';  // Import About component
-import Help from './Components/Help';    // Import Help component
+import About from './Components/About';
+import Help from './Components/Help';
 
 function App() {
   const [fishData, setFishData] = useState([]);
 
+  // Fetching fish data from your API
   useEffect(() => {
-    fetch('https://your-backend-url.com/api/fish')  // Update your backend URL
+    fetch('https://your-backend-url.com/api/fish')  // Use the correct backend URL here
       .then((response) => response.json())
       .then((data) => setFishData(data))
       .catch((error) => console.error('Error fetching fish data:', error));
