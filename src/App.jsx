@@ -12,8 +12,13 @@ function App() {
 
   // Fetching fish data from the local JSON file
   useEffect(() => {
-    fetch('public/fish_data.json')  // Fetching the JSON from the public folder
-      .then((response) => response.json())
+    fetch('public/fish_data.json')  // Fetching the JSON from the public folder directly
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch fish data');
+        }
+        return response.json();
+      })
       .then((data) => setFishData(data))
       .catch((error) => console.error('Error fetching fish data:', error));
   }, []);
@@ -22,19 +27,10 @@ function App() {
     <Router>
       <Nav />
       <Routes>
-        {/* Home Page */}
         <Route path="/" element={<Home />} />
-
-        {/* Fish Catalog */}
         <Route path="/catalog" element={<FishCatalog fishData={fishData} />} />
-
-        {/* Dynamic Fish Details Page */}
         <Route path="/fish/:id" element={<FishDetails fishData={fishData} />} />
-
-        {/* About Page */}
         <Route path="/about" element={<About />} />
-
-        {/* Help Page */}
         <Route path="/help" element={<Help />} />
       </Routes>
     </Router>
