@@ -10,9 +10,9 @@ import Help from './Components/Help';
 function App() {
   const [fishData, setFishData] = useState([]);
 
-  // Fetching fish data from your API
+  // Fetching fish data from the local JSON file
   useEffect(() => {
-    fetch('https://aquaticid-6f07c08e39de.herokuapp.com')  // Use the correct backend URL here
+    fetch('public/fish_data.json')  // Fetching the JSON from the public folder
       .then((response) => response.json())
       .then((data) => setFishData(data))
       .catch((error) => console.error('Error fetching fish data:', error));
