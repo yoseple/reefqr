@@ -12,7 +12,7 @@ function App() {
 
   // Fetching fish data from your API
   useEffect(() => {
-    fetch('https://your-backend-url.com/api/fish')  // Use the correct backend URL here
+    fetch('https://aquaticid-6f07c08e39de.herokuapp.com')  // Use the correct backend URL here
       .then((response) => response.json())
       .then((data) => setFishData(data))
       .catch((error) => console.error('Error fetching fish data:', error));
