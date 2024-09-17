@@ -23,7 +23,7 @@ function App() {
       <Nav />
       <Routes>
         {/* Home Page */}
-        <Route path="/" element={<Home />} />
+        <Route path="/reefqr" element={<Home />} />
 
         {/* Fish Catalog */}
         <Route path="/catalog" element={<FishCatalog fishData={fishData} />} />
