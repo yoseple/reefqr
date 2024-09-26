@@ -12,7 +12,7 @@ function App() {
 
   // Fetching fish data from the local JSON file
   useEffect(() => {
-    fetch(`${process.env.PUBLIC_URL || ''}public/fish_data.json`)  // Fetching the JSON from the public folder directly
+    fetch('public/Assets/fish_data.json')  // Fetching the JSON from the public folder directly
       .then((response) => {
         if (!response.ok) {
           throw new Error('Failed to fetch fish data');
