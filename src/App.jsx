@@ -10,9 +10,11 @@ import Help from './Components/Help';
 function App() {
   const [fishData, setFishData] = useState([]);
 
-  // Fetching fish data from the local JSON file
   useEffect(() => {
-    fetch('public/Assets/fish_data.json')  // Fetching the JSON from the public folder directly
+    const isGithubPages = window.location.hostname !== 'localhost';
+    const basePath = isGithubPages ? '/reefqr' : '';
+  
+    fetch(`${basePath}/Assets/fish_data.json`)
       .then((response) => {
         if (!response.ok) {
           throw new Error('Failed to fetch fish data');

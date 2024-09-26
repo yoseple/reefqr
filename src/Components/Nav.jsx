@@ -14,14 +14,6 @@ const Nav = () => {
         <div className="flex items-center justify-between h-16">
           {/* Left: Logo and Name */}
           <div className="flex items-center">
-            {/* Image next to the text */}
-            <Link to="/">
-              <img
-                src="../../public/QR_code_fish_logo.jpeg" // Update this path
-                alt="ReefQR Logo"
-                className="h-8 w-8 mr-2"
-              />
-            </Link>
             {/* Link to Home */}
             <Link to="/" className="text-2xl font-bold text-[#EDF2F4] hover:text-[#8D99AE]">
               ReefQR
