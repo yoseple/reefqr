@@ -6,23 +6,13 @@ import FishCatalog from './Components/FishCatalog';
 import FishDetails from './Components/FishDetails';
 import About from './Components/About';
 import Help from './Components/Help';
+import fishDataJson from './Components/fish_data.json'; // Correctly importing the JSON data
 
 function App() {
   const [fishData, setFishData] = useState([]);
 
   useEffect(() => {
-    const isGithubPages = window.location.hostname !== 'localhost';
-    const basePath = isGithubPages ? '/reefqr' : '';
-  
-    fetch(`${basePath}/Assets/fish_data.json`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Failed to fetch fish data');
-        }
-        return response.json();
-      })
-      .then((data) => setFishData(data))
-      .catch((error) => console.error('Error fetching fish data:', error));
+    setFishData(fishDataJson); // Properly setting the data, not a component
   }, []);
 
   return (
