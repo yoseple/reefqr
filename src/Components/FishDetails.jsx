@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import Footer from './Footer';
 
 const FishDetails = ({ fishData }) => {
   // Always call hooks at the top level
@@ -89,6 +90,7 @@ const FishDetails = ({ fishData }) => {
           </p>
         </section>
       </div>
+      <Footer/>
     </div>
   );
 };

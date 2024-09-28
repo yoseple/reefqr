@@ -1,4 +1,5 @@
 import React from 'react';
+import Footer from './Footer';
 
 const About = () => {
   return (
@@ -8,7 +9,9 @@ const About = () => {
         ReefQR is your go-to platform for discovering and exploring various species of saltwater fish. Our catalog contains detailed information
         on care, feeding, and breeding for a variety of fish species. Whether you're a seasoned aquarist or just getting started, we're here to help you.
       </p>
+      
     </div>
+    
   );
 };
 

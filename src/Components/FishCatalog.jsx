@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import Footer from './Footer';
 
 const FishCatalog = ({ fishData }) => {
   const [filter, setFilter] = useState('All'); // State to hold the selected filter
@@ -144,6 +145,7 @@ const FishCatalog = ({ fishData }) => {
           )}
         </div>
       </main>
+      <Footer/>
     </div>
   );
 };
