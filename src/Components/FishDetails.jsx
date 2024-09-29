@@ -1,27 +1,59 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Footer from './Footer';
+import QRCodeStyling from 'qr-code-styling'; // Import the qr-code-styling library
 
 const FishDetails = ({ fishData }) => {
-  // Always call hooks at the top level
   const { id } = useParams();
-
-  // Ensure fishData is present and valid
   const fish = fishData ? fishData[id] : null;
+  const qrCode = useRef(null); // Ref to store the QRCodeStyling instance
 
-  // Call useEffect even if fish is not found, to maintain hook order
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
 
-  // If fish is not found, return early
+    if (fish && !qrCode.current) {
+      // Initialize the QR code with fish name overlay
+      qrCode.current = new QRCodeStyling({
+        width: 300,
+        height: 300,
+        data: window.location.href, // The current page URL
+        imageOptions: {
+          crossOrigin: "anonymous",
+          margin: 10,
+        },
+        dotsOptions: {
+          color: "#000",
+          type: "rounded",
+        },
+        backgroundOptions: {
+          color: "#ffffff",
+        },
+        image: "", // You can add an image if desired
+      });
+    }
+  }, [fish]);
+
   if (!fish) {
     return <p>Fish not found.</p>;
   }
 
+  // Function to handle QR code download as PNG
+  const handleDownloadQR = () => {
+    if (qrCode.current) {
+      // Before downloading, add fish name to QR code as text overlay
+      qrCode.current.update({
+        image: `data:image/svg+xml;base64,${btoa(`
+          <svg xmlns="http://www.w3.org/2000/svg" width="300" height="300">
+            <text x="50%" y="90%" font-size="24" fill="black" text-anchor="middle">${fish.name}</text>
+          </svg>
+        `)}`,
+      });
+      qrCode.current.download({ name: `${fish.name}-qr`, extension: 'png' });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 p-8">
-      {/* Sticky Back to Catalog Link */}
       <div className="sticky top-16 z-20 bg-gray-100 py-4 mb-4">
         <Link
           to="/catalog"
@@ -31,7 +63,6 @@ const FishDetails = ({ fishData }) => {
         </Link>
       </div>
 
-      {/* Fish Name and Image */}
       <div className="text-center mb-8">
         <h1 className="text-5xl font-bold text-gray-800 mb-4">{fish.name}</h1>
         <div className="relative inline-block">
@@ -43,7 +74,18 @@ const FishDetails = ({ fishData }) => {
         </div>
       </div>
 
-      {/* Overview Section */}
+      {/* QR Code Download Section */}
+      <div className="text-center mb-8">
+        <div className="mt-4">
+          <button
+            onClick={handleDownloadQR}
+            className="bg-blue-500 text-white px-4 py-2 rounded-full shadow-lg hover:bg-blue-600 transition duration-300"
+          >
+            Download QR Code with Fish Name
+          </button>
+        </div>
+      </div>
+
       <section className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg mb-8">
         <h2 className="text-3xl font-bold text-gray-800 mb-4">Overview</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -74,9 +116,7 @@ const FishDetails = ({ fishData }) => {
         </div>
       </section>
 
-      {/* Details Section */}
       <div className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg">
-        {/* Care, Feeding, and Breeding */}
         <section className="mb-8">
           <h2 className="text-3xl font-bold text-gray-800 mb-4">General Information</h2>
           <p className="text-gray-600 mb-4">
@@ -90,7 +130,7 @@ const FishDetails = ({ fishData }) => {
           </p>
         </section>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

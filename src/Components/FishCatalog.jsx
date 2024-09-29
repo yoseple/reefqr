@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Footer from './Footer';
+import { useSearchParams } from 'react-router-dom';
 
 const FishCatalog = ({ fishData }) => {
   const [filter, setFilter] = useState('All'); // State to hold the selected filter
   const [searchTerm, setSearchTerm] = useState(''); // State to hold the search term
-  const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate(); // useNavigate for programmatic navigation
 
   // Fish categories and keywords for filtering by name
   const fishCategories = [
@@ -43,18 +45,44 @@ const FishCatalog = ({ fishData }) => {
     'Wrasses': ['Wrasse']
   };
 
-  // Restore scroll position from localStorage
+  useEffect(() => {
+    // Retrieve filter and search term from query parameters when the component loads
+    const filterParam = searchParams.get('filter') || 'All';
+    const searchParam = searchParams.get('searchTerm') || '';
+
+    setFilter(filterParam);
+    setSearchTerm(searchParam);
+  }, [searchParams]);
+
+  const handleLinkClick = (fishId) => {
+    // Save the current filter and search term in the URL
+    const queryParams = new URLSearchParams({ filter, searchTerm }).toString();
+    navigate(`/fish/${fishId}?${queryParams}`);
+  };
+
+  const handleFilterChange = (e) => {
+    const selectedFilter = e.target.value;
+    setFilter(selectedFilter);
+
+    // Update the URL with the new filter and current search term
+    setSearchParams({ filter: selectedFilter, searchTerm });
+  };
+
+  const handleSearchChange = (e) => {
+    const searchValue = e.target.value;
+    setSearchTerm(searchValue);
+
+    // Update the URL with the current filter and new search term
+    setSearchParams({ filter, searchTerm: searchValue });
+  };
+
+  // Restore scroll position from localStorage when coming back
   useEffect(() => {
     const savedScrollPosition = localStorage.getItem('scrollPosition');
     if (savedScrollPosition) {
       window.scrollTo(0, parseInt(savedScrollPosition, 10));
     }
   }, []);
-
-  // Save scroll position before navigating to FishDetails
-  const handleLinkClick = () => {
-    localStorage.setItem('scrollPosition', window.scrollY);
-  };
 
   // Function to determine if a fish belongs to a specific category by checking its name
   const isInCategory = (fishName, category) => {
@@ -87,7 +115,7 @@ const FishCatalog = ({ fishData }) => {
         <div className="relative inline-block w-full md:w-auto mb-4 md:mb-0">
           <select
             value={filter}
-            onChange={(e) => setFilter(e.target.value)} // Update filter state
+            onChange={handleFilterChange} // Update filter state and query params
             className="block appearance-none w-full bg-[#2B2D42] text-[#EDF2F4] py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:bg-[#8D99AE] focus:text-white transition-colors duration-300 shadow-lg"
           >
             {fishCategories.map((category, index) => (
@@ -108,7 +136,7 @@ const FishCatalog = ({ fishData }) => {
             type="text"
             placeholder="Search fish by name..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)} // Update search term
+            onChange={handleSearchChange} // Update search term and query params
             className="block w-full bg-white text-[#2B2D42] py-2 px-4 rounded-full leading-tight focus:outline-none focus:bg-[#8D99AE] focus:text-white transition-colors duration-300 shadow-lg"
           />
         </div>
@@ -124,11 +152,14 @@ const FishCatalog = ({ fishData }) => {
           {filteredFishData.length === 0 ? (
             <p className="text-[#2B2D42]">No fish found for this category...</p>
           ) : (
-            filteredFishData.map((fish, index) => (
+            filteredFishData.map((fish) => (
               <Link
-                to={`/fish/${index}`}
-                key={index}
-                onClick={handleLinkClick}  // Save scroll position
+                to={`/fish/${fish.id}`}  // Use a unique id instead of index
+                key={fish.id}
+                onClick={() => {
+                  localStorage.setItem('scrollPosition', window.scrollY); // Save scroll position
+                  handleLinkClick(fish.id); // Navigate with filter and search in query params
+                }}
               >
                 <div className="group relative bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105 hover:shadow-lg">
                   <img
@@ -145,7 +176,7 @@ const FishCatalog = ({ fishData }) => {
           )}
         </div>
       </main>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

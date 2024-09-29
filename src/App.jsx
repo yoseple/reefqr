@@ -6,7 +6,7 @@ import FishCatalog from './Components/FishCatalog';
 import FishDetails from './Components/FishDetails';
 import About from './Components/About';
 import Help from './Components/Help';
-import fishDataJson from './Components/fish_data.json'; // Correctly importing the JSON data
+import fishDataJson from './Components/salt_fish_data.json'; // Correctly importing the JSON data
 
 function App() {
   const [fishData, setFishData] = useState([]);
