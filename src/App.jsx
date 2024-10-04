@@ -6,13 +6,17 @@ import FishCatalog from './Components/FishCatalog';
 import FishDetails from './Components/FishDetails';
 import About from './Components/About';
 import Help from './Components/Help';
-import fishDataJson from './Components/salt_fish_data.json'; // Correctly importing the JSON data
+import saltFishDataJson from './Components/salt_fish_data.json'; // Correctly importing the saltwater JSON data
+import freshWaterDataJson from './Components/Fresh_water_data.json'; // Importing freshwater JSON data
+import FreshCatalog from './Components/FreshCatalog'; // Import the FreshCatalog component
 
 function App() {
-  const [fishData, setFishData] = useState([]);
+  const [saltFishData, setSaltFishData] = useState([]);
+  const [freshFishData, setFreshFishData] = useState([]);
 
   useEffect(() => {
-    setFishData(fishDataJson); // Properly setting the data, not a component
+    setSaltFishData(saltFishDataJson); // Set the saltwater data
+    setFreshFishData(freshWaterDataJson); // Set the freshwater data
   }, []);
 
   return (
@@ -20,8 +24,11 @@ function App() {
       <Nav />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/catalog" element={<FishCatalog fishData={fishData} />} />
-        <Route path="/fish/:id" element={<FishDetails fishData={fishData} />} />
+        <Route path="/catalog" element={<FishCatalog fishData={saltFishData} />} />
+        <Route path="/fresh-catalog" element={<FreshCatalog fishData={freshFishData} />} /> {/* New route for FreshCatalog */}
+        
+        <Route path="/fish/:id" element={<FishDetails fishData={saltFishData} />} /> {/* Assuming FishDetails for saltwater */}
+        <Route path="/fresh-fish/:id" element={<FishDetails fishData={freshFishData} />} /> {/* New route for freshwater fish details */}
         <Route path="/about" element={<About />} />
         <Route path="/help" element={<Help />} />
       </Routes>

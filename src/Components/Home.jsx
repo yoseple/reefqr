@@ -45,6 +45,23 @@ const Home = () => {
             </div>
           </div>
           {/* Add more categories as needed */}
+          <div className="bg-white rounded-lg shadow-md overflow-hidden">
+            <img
+              src="https://www.mainesportsman.com/wp-content/uploads/2015/05/poster_fresh_northeast__07701.1407628298.1280.1280.jpg"
+              alt="Fresh Water Fish"
+              className="w-full h-60 object-cover"
+            />
+            <div className="p-4">
+              <h3 className="text-xl font-bold text-[#2B2D42]">Fresh Water Fish</h3>
+              <p className="text-[#8D99AE]">Explore different species of Fresh Water fish.</p>
+              <Link
+                to="/fresh-catalog"
+                className="mt-6 inline-block bg-[#2B2D42] text-white font-bold py-2 px-6 rounded-full hover:bg-[#8D99AE] transition-colors duration-300"
+              >
+                Explore Fresh Water Fish
+              </Link>
+            </div>
+          </div>
         </div>
       </main>
 

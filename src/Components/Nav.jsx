@@ -22,12 +22,12 @@ const Nav = () => {
 
           {/* Right: Links */}
           <div className="hidden md:flex space-x-4">
-            <Link
+            {/* <Link
               to="/catalog"
               className="text-[#EDF2F4] hover:text-[#8D99AE] text-lg font-medium"
             >
               Fish Catalog
-            </Link>
+            </Link> */}
 
             <Link
               to="/about"

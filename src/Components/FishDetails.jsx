@@ -1,10 +1,11 @@
 import React, { useEffect, useRef } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useLocation } from 'react-router-dom';
 import Footer from './Footer';
 import QRCodeStyling from 'qr-code-styling'; // Import the qr-code-styling library
 
 const FishDetails = ({ fishData }) => {
   const { id } = useParams();
+  const location = useLocation(); // Get the location object to access the passed state
   const fish = fishData ? fishData[id] : null;
   const qrCode = useRef(null); // Ref to store the QRCodeStyling instance
 
@@ -52,14 +53,17 @@ const FishDetails = ({ fishData }) => {
     }
   };
 
+  // Determine which catalog to navigate back to based on the state
+  const catalogType = location.state?.catalog || 'saltwater'; // Default to saltwater if no state is passed
+
   return (
     <div className="min-h-screen bg-gray-100 p-8">
       <div className="sticky top-16 z-20 bg-gray-100 py-4 mb-4">
         <Link
-          to="/catalog"
+          to={catalogType === 'saltwater' ? '/catalog' : '/fresh-catalog'} // Dynamic navigation based on the catalog type
           className="inline-block bg-[#2B2D42] text-[#EDF2F4] font-bold py-2 px-6 rounded-full hover:bg-[#8D99AE] transition-colors duration-300"
         >
-          &larr; Back to Catalog
+          &larr; Back to {catalogType === 'saltwater' ? 'Saltwater' : 'Freshwater'} Catalog
         </Link>
       </div>
 
