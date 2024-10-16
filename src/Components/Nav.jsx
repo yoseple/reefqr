@@ -40,7 +40,7 @@ const Nav = () => {
               to="/help"
               className="text-[#EDF2F4] hover:text-[#8D99AE] text-lg font-medium"
             >
-              Help
+              Contact
             </Link>
           </div>
 

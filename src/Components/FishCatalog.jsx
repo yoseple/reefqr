@@ -166,6 +166,7 @@ const FishCatalog = ({ fishData }) => {
                     src={fish.image_url || 'https://via.placeholder.com/300'}
                     alt={fish.name}
                     className="w-full h-40 object-cover sm:h-48"
+                    loading= "lazy"
                   />
                   <div className="p-4">
                     <h2 className="text-sm sm:text-md font-bold text-[#2B2D42] text-center">{fish.name}</h2>

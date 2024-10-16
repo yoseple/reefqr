@@ -6,8 +6,8 @@ import FishCatalog from './Components/FishCatalog';
 import FishDetails from './Components/FishDetails';
 import About from './Components/About';
 import Help from './Components/Help';
-import saltFishDataJson from './Components/salt_fish_data.json'; // Correctly importing the saltwater JSON data
-import freshWaterDataJson from './Components/Fresh_water_data.json'; // Importing freshwater JSON data
+import saltFishDataJson from './Components/data/salt_fish_data.json'; // Correctly importing the saltwater JSON data
+import freshWaterDataJson from './Components/data/Fresh_water_data.json'; // Importing freshwater JSON data
 import FreshCatalog from './Components/FreshCatalog'; // Import the FreshCatalog component
 
 function App() {
